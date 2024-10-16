@@ -1,0 +1,32 @@
+service: my-serverless-app
+
+provider:
+  name: aws
+  runtime: python3.9
+  stage: dev
+  region: us-east-1
+
+functions:
+  serviceA:
+    handler: src.handler.service_a_handler
+    events:
+      - http:
+          path: service-a
+          method: get
+
+  serviceB:
+    handler: src.handler.service_b_handler
+    events:
+      - http:
+          path: service-b
+          method: post
+
+plugins:
+  - serverless-python-requirements
+  - serverless-offline
+
+package:
+  exclude:
+    - node_modules/**
+    - .gitignore
+    - README.md
